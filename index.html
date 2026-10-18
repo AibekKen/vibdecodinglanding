@@ -1,0 +1,352 @@
+<title>Приложение за вечер</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one evening, 19:00 to 22:00, as the spine of the page. Single dark look to match the ads. */
+:root {
+  --ink: #0b0f1c;
+  --panel: #141a2e;
+  --line: #262e4a;
+  --fg: #eef0f7;
+  --muted: #9aa3bf;
+  --lime: #c6ff3d;
+  --violet: #8a6cff;
+  --on-lime: #12162a;
+  --display: "Unbounded", "Golos Text", system-ui, sans-serif;
+  --body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--ink);
+  color: var(--fg);
+  font: 400 17px/1.6 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  overflow-x: hidden;
+}
+.wrap { max-width: 1120px; margin: 0 auto; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h2 { font-size: clamp(26px, 4vw, 40px); line-height: 1.15; font-weight: 700; }
+p { margin: 0; }
+.eyebrow {
+  font: 500 13px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--lime);
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  background: var(--lime); color: var(--on-lime); text-decoration: none; border: 0; cursor: pointer;
+  font: 700 17px/1 var(--display); padding: 20px 30px; border-radius: 999px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px var(--lime); }
+.btn:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+
+/* hero */
+.top { display: flex; justify-content: space-between; align-items: center; padding-block: 22px; gap: 16px; }
+.logo { font: 800 16px/1 var(--display); letter-spacing: 0.02em; }
+.logo span { color: var(--lime); }
+.top .when { font: 500 13px/1.3 var(--mono); color: var(--muted); text-align: right; }
+.hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: center; padding-block: 48px 88px; }
+.hero > * { min-width: 0; }
+.hero h1 { font-size: clamp(36px, 6.2vw, 68px); line-height: 1.04; font-weight: 800; margin-top: 20px; }
+.hero h1 em { font-style: normal; color: var(--lime); }
+.hero .lead { color: var(--muted); font-size: 19px; max-width: 34em; margin-top: 24px; }
+.hero .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 36px; }
+.hero .note { font-size: 14px; color: var(--muted); max-width: 22em; }
+
+/* demo: prompt -> app */
+.demo { position: relative; display: grid; gap: 14px; }
+.prompt { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 18px 20px; }
+.prompt .tag { font: 500 12px/1 var(--mono); color: var(--violet); letter-spacing: .06em; text-transform: uppercase; }
+.prompt p { font: 400 15px/1.55 var(--mono); margin-top: 10px; }
+.caret { display: inline-block; width: 8px; height: 1.1em; background: var(--lime); vertical-align: -3px; margin-left: 2px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.arrow { justify-self: center; font: 500 13px/1 var(--mono); color: var(--lime); }
+.phone {
+  justify-self: center; width: min(300px, 100%); background: #f3f4f9; color: #141830;
+  border: 8px solid #2a3150; border-radius: 40px; padding: 26px 18px 20px; box-shadow: 0 30px 80px -30px #000;
+}
+.phone h3 { font: 700 22px/1.1 var(--body); }
+.phone .sub { font-size: 13px; color: #7a8099; margin-top: 2px; }
+.days { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 14px; }
+.days div { background: #fff; border-radius: 12px; text-align: center; padding: 6px 0; font: 600 15px/1.2 var(--body); }
+.days small { display: block; font-weight: 500; font-size: 11px; color: #8a90a8; }
+.days .on { background: var(--violet); color: #fff; }
+.days .on small { color: #e4defe; }
+.slot { display: flex; align-items: center; gap: 12px; background: #fff; border-radius: 16px; padding: 12px 14px; margin-top: 10px; border-left: 4px solid var(--c); }
+.slot b { display: block; color: var(--c); font: 700 13px/1.2 var(--body); font-variant-numeric: tabular-nums; }
+.slot span { display: block; font: 600 15px/1.3 var(--body); }
+.slot small { color: #7a8099; font-size: 12px; }
+.badge { position: absolute; right: -6px; bottom: 26px; background: var(--lime); color: var(--on-lime); font: 700 13px/1 var(--display); padding: 10px 14px; border-radius: 999px; transform: rotate(-4deg); }
+
+/* evening timeline */
+section { padding-block: 72px; border-top: 1px solid var(--line); }
+.sec-head { display: grid; gap: 14px; max-width: 40em; margin-bottom: 44px; }
+.sec-head p { color: var(--muted); }
+.evening { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.evening::before { content: ""; position: absolute; left: 0; right: 0; top: 37px; height: 2px; background: linear-gradient(90deg, var(--violet), var(--lime)); }
+.evening li { padding-right: 24px; min-width: 0; }
+.evening time { font: 500 15px/1 var(--mono); color: var(--lime); font-variant-numeric: tabular-nums; }
+.evening .dot { width: 16px; height: 16px; border-radius: 50%; background: var(--ink); border: 3px solid var(--lime); margin: 12px 0 22px; position: relative; }
+.evening h3 { font-size: 18px; line-height: 1.25; font-weight: 700; }
+.evening p { color: var(--muted); font-size: 15px; margin-top: 10px; }
+
+/* audience + takeaways */
+.cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.who { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 26px; display: grid; gap: 10px; align-content: start; }
+.who h3 { font-size: 18px; font-weight: 700; }
+.who p { color: var(--muted); font-size: 15px; }
+.who .ex { font: 400 13px/1.5 var(--mono); color: var(--fg); border-top: 1px dashed var(--line); padding-top: 12px; margin-top: 4px; }
+
+.host { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; }
+.avatar { width: 112px; height: 112px; border-radius: 28px; background: var(--violet); display: grid; place-items: center; font: 800 38px/1 var(--display); color: #fff; }
+.host p { color: var(--muted); margin-top: 10px; max-width: 38em; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.facts span { font: 500 13px/1 var(--mono); border: 1px solid var(--line); border-radius: 999px; padding: 9px 13px; }
+
+/* form */
+.signup { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 48px; align-items: start; }
+.signup > * { min-width: 0; }
+.signup .sec-head { margin-bottom: 0; }
+.checks { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; }
+.checks li { display: flex; gap: 12px; align-items: baseline; }
+.checks li::before { content: "✓"; color: var(--lime); font-weight: 700; }
+form { background: var(--panel); border: 1px solid var(--line); border-radius: 26px; padding: 30px; display: grid; gap: 18px; }
+label { display: grid; gap: 8px; font-weight: 500; font-size: 15px; }
+label small { color: var(--muted); font-weight: 400; }
+input, textarea {
+  width: 100%; background: var(--ink); color: var(--fg); border: 1px solid var(--line); border-radius: 14px;
+  font: 400 16px/1.4 var(--body); padding: 14px 16px;
+}
+input::placeholder, textarea::placeholder { color: #5f6886; }
+textarea { min-height: 90px; resize: vertical; }
+.invalid { border-color: #ff6b6b; }
+.err { color: #ff8f8f; font-size: 14px; }
+.consent { font-size: 13px; color: var(--muted); }
+.done { display: grid; gap: 10px; text-align: center; padding: 20px 6px; }
+.done .big { font: 700 22px/1.2 var(--display); color: var(--lime); }
+.done p { color: var(--muted); }
+
+/* faq */
+details { border-bottom: 1px solid var(--line); padding-block: 20px; }
+summary { cursor: pointer; font: 600 18px/1.35 var(--body); list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--lime); font: 500 22px/1 var(--mono); }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); margin-top: 12px; max-width: 46em; }
+
+footer { border-top: 1px solid var(--line); padding-block: 32px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .hero, .signup { grid-template-columns: 1fr; gap: 44px; }
+  .hero { padding-block: 24px 64px; }
+  .cols { grid-template-columns: 1fr; }
+  .evening { grid-template-columns: 1fr; gap: 28px; padding-left: 34px; }
+  .evening::before { left: 7px; right: auto; top: 6px; bottom: 6px; width: 2px; height: auto; background: linear-gradient(180deg, var(--violet), var(--lime)); }
+  .evening li { position: relative; padding-right: 0; }
+  .evening .dot { position: absolute; left: -34px; top: 0; margin: 0; }
+  .evening time { display: block; margin-bottom: 8px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 16px; }
+  .top .when { display: none; }
+  .host { grid-template-columns: 1fr; }
+  form { padding: 22px; }
+  .btn { width: 100%; }
+  .badge { right: 4px; }
+  section { padding-block: 56px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .caret { animation: none; }
+  .btn { transition: none; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo">вайб<span>/</span>кодинг</div>
+    <div class="when">Бесплатный мастер-класс<br>онлайн</div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Бесплатный мастер-класс · онлайн</div>
+        <h1>Как за <em>1 вечер</em> создать своё приложение с ИИ</h1>
+        <p class="lead">Покажу вживую, как описать идею обычными словами и получить работающее приложение: с экранами, базой данных и входом через Google. Опыт программирования не нужен.</p>
+        <div class="actions">
+          <a class="btn" href="#signup">Записаться бесплатно</a>
+          <p class="note">Дату и ссылку на эфир пришлём после регистрации</p>
+        </div>
+      </div>
+
+      <div class="demo" aria-label="Пример: запрос к ИИ и готовое приложение">
+        <div class="prompt">
+          <div class="tag">Запрос к ИИ</div>
+          <p>Сделай приложение для записи клиентов в салон: расписание, вход через Google, напоминания<span class="caret" aria-hidden="true"></span></p>
+        </div>
+        <div class="arrow">↓ через вечер</div>
+        <div class="phone">
+          <h3>Мои записи</h3>
+          <div class="sub">Салон красоты</div>
+          <div class="days">
+            <div><small>Пн</small>21</div><div><small>Вт</small>22</div><div class="on"><small>Ср</small>23</div><div><small>Чт</small>24</div><div><small>Пт</small>25</div>
+          </div>
+          <div class="slot" style="--c:#7b5cff"><div><b>10:00</b><span>Анна К.</span><small>Стрижка · 60 мин</small></div></div>
+          <div class="slot" style="--c:#f2694a"><div><b>11:30</b><span>Марат Е.</span><small>Окрашивание · 2 ч</small></div></div>
+          <div class="slot" style="--c:#1fa77a"><div><b>14:00</b><span>Дина С.</span><small>Маникюр · 90 мин</small></div></div>
+        </div>
+        <div class="badge">0 строк кода руками</div>
+      </div>
+    </div>
+
+    <section>
+      <div class="sec-head">
+        <div class="eyebrow">План вечера</div>
+        <h2>От идеи до ссылки, которую можно отправить друзьям</h2>
+        <p>На мастер-классе пройдём весь путь на одном примере. Вы увидите каждый шаг на экране и поймёте, как повторить его со своей идеей.</p>
+      </div>
+      <ol class="evening">
+        <li><time>19:00</time><div class="dot"></div><h3>Идея и задача для ИИ</h3><p>Как превратить «хочу приложение» в понятное описание, по которому ИИ пишет код.</p></li>
+        <li><time>19:40</time><div class="dot"></div><h3>ИИ собирает экраны</h3><p>Интерфейс, кнопки, страницы. Как просить правки и что делать, если ИИ ошибся.</p></li>
+        <li><time>20:30</time><div class="dot"></div><h3>Данные и вход</h3><p>Подключаем базу данных и вход через Google, чтобы приложением могли пользоваться другие люди.</p></li>
+        <li><time>21:30</time><div class="dot"></div><h3>Публикация</h3><p>Выкладываем приложение в интернет и получаем ссылку, которая открывается на любом телефоне.</p></li>
+      </ol>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <div class="eyebrow">Для кого</div>
+        <h2>Подойдёт, если у вас есть задача, но нет программиста</h2>
+      </div>
+      <div class="cols">
+        <div class="who"><h3>Владельцам бизнеса</h3><p>Нужна запись клиентов, учёт или бот, а разработка стоит дорого и долго.</p><div class="ex">запись · учёт заказов · CRM</div></div>
+        <div class="who"><h3>Специалистам</h3><p>Хотите автоматизировать рутину на работе и сделать свой инструмент.</p><div class="ex">отчёты · таблицы · внутренние сервисы</div></div>
+        <div class="who"><h3>Тем, у кого есть идея</h3><p>Хотите проверить идею стартапа на живом продукте, а не на презентации.</p><div class="ex">MVP · первые пользователи · обратная связь</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="host">
+        <div class="avatar" aria-hidden="true">АК</div>
+        <div>
+          <div class="eyebrow">Ведущий</div>
+          <h2 style="margin-top:10px">Айбек Кенжебаев</h2>
+          <p>Senior Software Engineer. Сейчас собирает полноценные приложения с помощью ИИ-агентов и покажет свой рабочий процесс без упрощений.</p>
+          <div class="facts"><span>5 лет в IT</span><span>Senior Software Engineer</span><span>разработка с ИИ-агентами</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="signup">
+      <div class="signup">
+        <div class="sec-head">
+          <div class="eyebrow">Регистрация</div>
+          <h2>Займите место на мастер-классе</h2>
+          <p>Участие бесплатное. После регистрации пришлём дату, время и ссылку на эфир.</p>
+          <ul class="checks">
+            <li>Весь процесс от идеи до готовой ссылки</li>
+            <li>Какие инструменты нужны и сколько они стоят</li>
+            <li>Ответы на вопросы в прямом эфире</li>
+          </ul>
+        </div>
+
+        <form id="form" novalidate>
+          <label for="name">Как вас зовут
+            <input id="name" name="name" autocomplete="given-name" placeholder="Ерлан">
+          </label>
+          <label for="contact">Telegram или телефон
+            <input id="contact" name="contact" autocomplete="tel" placeholder="@username или +7 700 000 00 00">
+          </label>
+          <label for="idea">Какое приложение хотите создать <small>необязательно</small>
+            <textarea id="idea" name="idea" placeholder="Например, запись клиентов для студии"></textarea>
+          </label>
+          <p class="err" id="err" hidden></p>
+          <button class="btn" type="submit" id="submit">Записаться бесплатно</button>
+          <p class="consent">Нажимая кнопку, вы соглашаетесь на обработку персональных данных для связи по мастер-классу.</p>
+        </form>
+        <div class="done" id="done" hidden>
+          <div class="big">Вы записаны</div>
+          <p>Скоро напишем вам с датой и ссылкой на эфир.</p>
+        </div>
+        <div class="done" id="demo-note" hidden>
+          <div class="big">Форма в режиме превью</div>
+          <p>Заявка никуда не отправлена: адрес для приёма заявок ещё не подключён.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><div class="eyebrow">Вопросы</div><h2>Частые вопросы</h2></div>
+      <details><summary>Это правда бесплатно?</summary><p>Да. В конце мастер-класса я расскажу о полном курсе для тех, кто захочет пройти путь со своим проектом, но покупать ничего не нужно.</p></details>
+      <details><summary>Нужно ли уметь программировать?</summary><p>Нет. Мастер-класс рассчитан на людей без опыта в коде. Всё, что нужно ИИ, вы будете писать обычными словами.</p></details>
+      <details><summary>Что понадобится?</summary><p>Ноутбук или компьютер и стабильный интернет. Для просмотра эфира подойдёт и телефон.</p></details>
+      <details><summary>Как я получу ссылку на эфир?</summary><p>Напишем в Telegram или на номер, который вы укажете в форме.</p></details>
+    </section>
+  </main>
+
+  <footer>
+    <span>ИП Кенжебаев</span>
+    <span>Бесплатный мастер-класс по созданию приложений с ИИ</span>
+  </footer>
+</div>
+
+<script>
+/*
+  Заявки уходят в функцию api/lead.js (Vercel), которая пересылает их в Telegram-бот.
+  Если оставить пустым, форма работает в режиме превью.
+*/
+const ENDPOINT = "/api/lead";
+
+const form = document.getElementById("form");
+const err = document.getElementById("err");
+const btn = document.getElementById("submit");
+const nameEl = document.getElementById("name");
+const contactEl = document.getElementById("contact");
+const ideaEl = document.getElementById("idea");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const name = nameEl.value.trim();
+  const contact = contactEl.value.trim();
+  nameEl.classList.toggle("invalid", !name);
+  const okContact = /^@?[A-Za-z0-9_]{5,32}$/.test(contact) || contact.replace(/\D/g, "").length >= 10;
+  contactEl.classList.toggle("invalid", !okContact);
+  if (!name || !okContact) {
+    err.textContent = !name ? "Укажите имя, чтобы мы знали, как к вам обращаться." : "Укажите ник в Telegram (например, @username) или телефон из 10–11 цифр.";
+    err.hidden = false;
+    return;
+  }
+  err.hidden = true;
+  if (!ENDPOINT) {
+    form.hidden = true;
+    document.getElementById("demo-note").hidden = false;
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = "Отправляем…";
+  try {
+    const params = new URLSearchParams(location.search);
+    const res = await fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name, contact, idea: ideaEl.value.trim(),
+        utm_source: params.get("utm_source"), utm_campaign: params.get("utm_campaign"), utm_content: params.get("utm_content")
+      })
+    });
+    if (!res.ok) throw new Error(res.status);
+    form.hidden = true;
+    document.getElementById("done").hidden = false;
+  } catch (x) {
+    err.textContent = "Не получилось отправить заявку. Проверьте интернет и нажмите кнопку ещё раз.";
+    err.hidden = false;
+    btn.disabled = false;
+    btn.textContent = "Записаться бесплатно";
+  }
+});
+</script>
