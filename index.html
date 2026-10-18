@@ -275,10 +275,6 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 40px; display: f
           <div class="big">Вы записаны</div>
           <p>Скоро напишем вам с датой и ссылкой на эфир.</p>
         </div>
-        <div class="done" id="demo-note" hidden>
-          <div class="big">Форма в режиме превью</div>
-          <p>Заявка никуда не отправлена: адрес для приёма заявок ещё не подключён.</p>
-        </div>
       </div>
     </section>
 
@@ -298,10 +294,7 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 40px; display: f
 </div>
 
 <script>
-/*
-  Заявки уходят в функцию api/lead.js (Vercel), которая пересылает их в Telegram-бот.
-  Если оставить пустым, форма работает в режиме превью.
-*/
+// Заявки уходят в функцию api/lead.js (Vercel), которая пересылает их в Telegram-бот.
 const ENDPOINT = "/api/lead";
 
 const form = document.getElementById("form");
@@ -324,11 +317,6 @@ form.addEventListener("submit", async (e) => {
     return;
   }
   err.hidden = true;
-  if (!ENDPOINT) {
-    form.hidden = true;
-    document.getElementById("demo-note").hidden = false;
-    return;
-  }
   btn.disabled = true;
   btn.textContent = "Отправляем…";
   try {
